@@ -1,34 +1,53 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import './Navbar.css';
+import "./Navbar.css";
+import { AuthContext } from "../../providers/AuthProvider";
+import { ShoppingCart } from 'react-feather';
+import useCart from "../../hooks/useCart";
+
 
 const Navbar = () => {
+  const { user, logOut } = useContext(AuthContext);
+  const [carts] = useCart();
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => console.log(error));
+  };
+
   const navItems = (
     <>
       <li>
         <Link>Home</Link>
       </li>
       <li>
-        <Link>Instructors</Link>
+        <Link to="/instructors">Instructors</Link>
       </li>
       <li>
-        <Link>Classes</Link>
+        <Link to="/classes">Classes</Link>
       </li>
 
-      {/* {user?.email ? (
+      {user?.email ? (
         <>
           <li>
-            <Link to="/myToys">My Toys</Link>
-            <Link to="/addToys">Add a Toy</Link>
-
-            <button
-              className="btn btn-outline btn-warning"
-              onClick={handleLogOut}
-            >
-              Log Out
-            </button>
+            <Link to="/dashboard">Dashboard</Link>
           </li>
+          <Link to="/dashboard/mycart">
+            <button className="btn gap-2">
+              <ShoppingCart />
+              <div className="badge badge-secondary">
+                +{carts?.length || 0}
+              </div>
+            </button>
+          </Link>
+          <button
+            className="btn btn-outline btn-warning"
+            onClick={handleLogOut}
+          >
+            Log Out
+          </button>
         </>
       ) : (
         <li>
@@ -36,11 +55,12 @@ const Navbar = () => {
             Login
           </Link>
         </li>
-      )} */}
+      )}
     </>
   );
+
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-100 text-white">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -75,7 +95,18 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{navItems}</ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        {user ? (
+          <img
+            width="40"
+            height="40"
+            className="mr-6 rounded-lg"
+            src={user?.photoURL}
+            alt=""
+            title={user?.displayName}
+          />
+        ) : (
+          " "
+        )}
       </div>
     </div>
   );
