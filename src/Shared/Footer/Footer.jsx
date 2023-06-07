@@ -4,7 +4,7 @@ import logo from "../../assets/logo.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-violet-700 text-white py-8">
+    <footer className="bg-yellow-200 text-black py-8">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
@@ -16,23 +16,23 @@ const Footer = () => {
             <span className="text-xl font-bold">Kraft <span className='text-pink-500'><i>&</i></span> Camp</span>
           </div>
           <div className="flex items-center space-x-4">
-            <a href="#" className="text-white hover:text-gray-300">
+            <a href="#" className="text-black hover:text-gray-600">
               <FaFacebook />
             </a>
-            <a href="#" className="text-white hover:text-gray-300">
+            <a href="#" className="text-black hover:text-gray-600">
               <FaTwitter />
             </a>
-            <a href="#" className="text-white hover:text-gray-300">
+            <a href="#" className="text-black hover:text-gray-600">
               <FaInstagram />
             </a>
           </div>
         </div>
-        <div className="mt-8 text-gray-300">
+        <div className="mt-8 text-black">
           <p className="mb-2">Contact: info@learnwithtoys.com</p>
           <p className="mb-2">123 Main Street, City, State, ZIP</p>
         </div>
         <hr className="my-8 border-gray-500" />
-        <div className="text-center text-gray-300">
+        <div className="text-center text-black">
           <p>&copy; {new Date().getFullYear()} Your Website. All rights reserved.</p>
         </div>
       </div>

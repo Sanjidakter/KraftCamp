@@ -1,7 +1,7 @@
 import React from "react";
-import b5 from "../../../assets/b5.png"
+import student from "../../../assets/students.png"
 import b6 from "../../../assets/b6.png"
-import b7 from "../../../assets/b7.png"
+import staff from "../../../assets/staff.png"
 
 const Info = () => {
   return (
@@ -9,7 +9,7 @@ const Info = () => {
       <div class="flex flex-wrap justify-center">
         <div class="max-w-xs mx-2 my-4 bg-white shadow-md rounded-lg overflow-hidden">
           <img
-            src={b5}
+            src={student}
             alt="Image 1"
             class="w-full h-40 object-cover"
           />
@@ -45,7 +45,7 @@ const Info = () => {
 
         <div class="max-w-xs mx-2 my-4 bg-white shadow-md rounded-lg overflow-hidden">
           <img
-            src={b7}
+            src={staff}
             alt="img 3"
             class="w-full h-40 object-cover"
           />

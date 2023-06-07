@@ -1,45 +1,54 @@
 import React from 'react';
+import paintingImage from '../../../assets/classes/painting.png';
+import sketchingImage from '../../../assets/classes/sketching.png';
+import sculptureImage from '../../../assets/classes/sculpture.png';
+import jewelryImage from '../../../assets/classes/jwelery.png';
+import craftsImage from '../../../assets/classes/crafts.png';
+import potteryImage from '../../../assets/classes/potery.png';
 
 
 const PopularClassesSection = () => {
+  
+  
   const classes = [
     {
       id: 1,
-      title: 'Drawing and Sketching',
-      image: 'yoga.jpg',
+      title: 'Drawing and Painting',
+      image: paintingImage,
       students: 120,
     },
     {
       id: 2,
-      title: 'Painting',
-      image: 'zumba.jpg',
+      title: 'Sketching',
+      image: sketchingImage,
       students: 90,
     },
     {
       id: 3,
       title: 'Sculpture',
-      image: 'pilates.jpg',
+      image: sculptureImage,
       students: 80,
     },
     {
       id: 4,
-      title: 'jewelery making',
-      image: 'crossfit.jpg',
+      title: 'Jewelry Making',
+      image: jewelryImage,
       students: 75,
     },
     {
       id: 5,
       title: 'Craft Workshop',
-      image: 'kickboxing.jpg',
+      image: craftsImage,
       students: 70,
     },
     {
       id: 6,
-      title: 'Potery and Ceramic',
-      image: 'spinning.jpg',
+      title: 'Pottery and Ceramic',
+      image: potteryImage,
       students: 65,
     },
   ];
+  
 
   // Sort classes based on the number of students in descending order
   const sortedClasses = classes.sort((a, b) => b.students - a.students);
