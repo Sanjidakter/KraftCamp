@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 const MyCart = () => {
     const [cart, refetch] = useCart();
     console.log(cart);
-    // how does reduce work!!!
+    
     const total = cart.reduce((sum, item) => item.price + sum, 0);
 
     const handleDelete = item => {
@@ -21,7 +21,7 @@ const MyCart = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`https://kraftcamp-server.vercel.app/carts/${item._id}`, {
+                fetch(`http://localhost:5000/carts/${item._id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
@@ -30,7 +30,7 @@ const MyCart = () => {
                             refetch();
                             Swal.fire(
                                 'Deleted!',
-                                'Your file has been deleted.',
+                                'Your class has been deleted.',
                                 'success'
                             )
                         }
@@ -40,6 +40,7 @@ const MyCart = () => {
     }
 
 
+
     return (
         <div className="w-full">
         <Helmet>
@@ -47,7 +48,7 @@ const MyCart = () => {
         </Helmet>
         <div className="uppercase font-semibold h-[60px] flex justify-evenly items-center">
             <h3 className="text-3xl">Selected Classes : {cart.length}</h3>
-            <h3 className="text-3xl">Total Price: ${total}</h3>
+            <h3 className="text-3xl">Total Payment: ${total}</h3>
             <button className="btn btn-warning btn-sm">PAY</button>
         </div>
         <div className="overflow-x-auto w-full">
@@ -80,7 +81,7 @@ const MyCart = () => {
                             <td>
                                 {item.name}
                             </td>
-                            <td className="text-end">${item.price}</td>
+                            <td className="text">${item.price}</td>
                             <td>
                                 <button onClick={() => handleDelete(item)} className="btn btn-ghost bg-red-600  text-white"><FaTrashAlt></FaTrashAlt></button>
                             </td>

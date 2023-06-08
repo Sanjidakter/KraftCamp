@@ -8,6 +8,7 @@ import InstructorsPage from "../pages/InstructorsPage/InstructorsPage";
 
 import MyCart from "../pages/Dashboard/MyCart/MyCart";
 import Dashboard from "../Layout/Dashboard";
+import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 
 
 
@@ -45,7 +46,11 @@ export const router = createBrowserRouter([
     {
       path:'mycart',
       element: <MyCart></MyCart>
-    }
+    },
+    {
+      path:'allusers',
+      element: <AllUsers></AllUsers>
+    },
    ]
   }
 ]);

@@ -12,7 +12,7 @@ function ClassesPage() {
   const location = useLocation();
 
   useEffect(() => {
-    fetch('https://kraftcamp-server.vercel.app/classes')
+    fetch('http://localhost:5000/classes')
       .then(response => response.json())
       .then(data => setClasses(data))
       .catch(error => console.log(error));
@@ -29,7 +29,7 @@ function ClassesPage() {
         email: user.email
       };
 
-      fetch('https://kraftcamp-server.vercel.app/carts', {
+      fetch('http://localhost:5000/carts', {
         method: 'POST',
         headers: {
           'content-type': 'application/json'
