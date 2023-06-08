@@ -6,6 +6,7 @@ import {
   FaHome,
 } from "react-icons/fa";
 import useCart from "../hooks/useCart";
+import { Feather } from "react-feather";
 
 const Dashboard = () => {
   const [cart] = useCart();
@@ -36,14 +37,16 @@ const Dashboard = () => {
           </li>
           <li>
             <NavLink to="/dashboard/mycart">
-              <FaShoppingCart></FaShoppingCart> My Cart
+              <FaShoppingCart></FaShoppingCart> My Classes
               <span className="badge inl badge-secondary">
                 +{cart?.length || 0}
               </span>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/enrolled">Enrolled Classes</NavLink>
+            <NavLink to="/dashboard/enrolled">
+                <Feather></Feather>
+                Enrolled Classes</NavLink>
           </li>
           <div className="divider"></div>
           <li>
