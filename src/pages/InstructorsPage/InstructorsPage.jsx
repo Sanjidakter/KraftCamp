@@ -4,7 +4,7 @@ const InstructorsPage = () => {
   const [instructors, setInstructors] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/instructors')
+    fetch(' https://kraftcamp-server.vercel.app/instructors')
       .then(response => response.json())
       .then(data => setInstructors(data))
       .catch(error => console.error('Error fetching instructors:', error));
