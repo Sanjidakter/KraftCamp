@@ -3,6 +3,7 @@ import Banner from "../Banner/Banner";
 import Info from "../Info/Info";
 import PopularClassesSection from "../PopularClassesSection/PopularClassesSection";
 import MyComponent from "../MyComponent/MyComponent";
+import InstructorsSection from "../InstructorsSection/InstructorsSection";
 
 const Home = () => {
   return (
@@ -21,6 +22,7 @@ const Home = () => {
       <Info></Info>
       <PopularClassesSection></PopularClassesSection>
       <MyComponent></MyComponent>
+      <InstructorsSection></InstructorsSection>
     </div>
   );
 };

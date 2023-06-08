@@ -5,8 +5,10 @@ import Signup from "../pages/Signup/Signup";
 import Login from "../pages/Login/Login";
 import ClassesPage from "../pages/ClassesPage/ClassesPage";
 import InstructorsPage from "../pages/InstructorsPage/InstructorsPage";
+
+import MyCart from "../pages/Dashboard/MyCart/MyCart";
 import Dashboard from "../Layout/Dashboard";
-import MyClasses from "../pages/Dashboard/MyClasses/MyClasses";
+
 
 
 export const router = createBrowserRouter([
@@ -41,8 +43,8 @@ export const router = createBrowserRouter([
     element:<Dashboard></Dashboard>,
    children:[
     {
-      path:'myclasses',
-      element:<MyClasses></MyClasses>
+      path:'mycart',
+      element: <MyCart></MyCart>
     }
    ]
   }
