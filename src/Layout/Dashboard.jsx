@@ -1,4 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
+
 import {
   FaShoppingCart,
   FaWallet,
@@ -12,9 +13,11 @@ import useAdmin from "../hooks/UseAdmin";
 
 const Dashboard = () => {
   const [cart] = useCart();
-  const isAdmin = true;
-  // const isAdmin = useAdmin();
+  // const isAdmin = true;
+  const isAdmin = useAdmin();
   const isInstructor = false;
+
+  console.log(isAdmin);
 
   return (
     <div className="drawer lg:drawer-open">
@@ -46,10 +49,8 @@ const Dashboard = () => {
               <li>
                 <NavLink to="/dashboard/allusers">
                   <FaUser></FaUser> Manage Users
-                  
                 </NavLink>
               </li>
-            
             </>
           ) : (
             <>
@@ -80,7 +81,6 @@ const Dashboard = () => {
             </>
           )}
 
-        
           <div className="divider"></div>
           <li>
             <NavLink to="/">
@@ -91,70 +91,6 @@ const Dashboard = () => {
             <NavLink to="/classes"> Our Classes</NavLink>
           </li>
         </ul>
-
-        {/* for instructor */}
-        <ul className="menu p-4 w-80 h-full bg-base-200 text-base-content">
-          {isInstructor ? (
-            <>
-              <li>
-                <NavLink to="/dashboard/home">
-                  <FaHome></FaHome> Admin Home
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/history">
-                  <FaWallet></FaWallet> Manage Classes
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/allusers">
-                  <FaUser></FaUser> Manage Users
-                  
-                </NavLink>
-              </li>
-            
-            </>
-          ) : (
-            <>
-              <li>
-                <NavLink to="/dashboard/home">
-                  <FaHome></FaHome> User Home
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/history">
-                  <FaWallet></FaWallet> Payment History
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/mycart">
-                  <FaShoppingCart></FaShoppingCart> My Classes
-                  <span className="badge inl badge-secondary">
-                    +{cart?.length || 0}
-                  </span>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/enrolled">
-                  <Feather></Feather>
-                  Enrolled Classes
-                </NavLink>
-              </li>
-            </>
-          )}
-
-        
-          <div className="divider"></div>
-          <li>
-            <NavLink to="/">
-              <FaHome></FaHome> Home
-            </NavLink>{" "}
-          </li>
-          <li>
-            <NavLink to="/classes"> Our Classes</NavLink>
-          </li>
-        </ul>
-        
       </div>
     </div>
   );
