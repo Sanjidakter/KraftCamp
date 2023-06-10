@@ -12,7 +12,7 @@ function MyClasses() {
       if (user) {
         const loggedInUser = user.displayName;
   
-        fetch('http://localhost:5000/classes')
+        fetch(' https://kraftcamp-server.vercel.app/classes')
           .then((response) => response.json())
           .then((data) => {
             const instructorClasses = data.filter(

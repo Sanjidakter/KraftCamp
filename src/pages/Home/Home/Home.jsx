@@ -15,7 +15,7 @@ const Home = () => {
 
   return (
     <div>
-      <section class="bg-yellow-200">
+      <section className="bg-yellow-200">
         <div className="container mx-auto py-8">
           <animated.h1
             className="text-4xl font-bold text-center text-gray-900"

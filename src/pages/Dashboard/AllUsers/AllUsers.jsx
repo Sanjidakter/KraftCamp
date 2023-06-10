@@ -34,7 +34,7 @@ const AllUsers = () => {
       .then((result) => {
         if (result.isConfirmed) {
           axiosSecure
-            .patch(`http://localhost:5000/users/change-role/${user._id}`, { role: "instructor" })
+            .patch(` users/change-role/${user._id}`, { role: "instructor" })
             .then((data) => {
               if (data.data.modifiedCount > 0) {
                 refetch();
@@ -71,7 +71,7 @@ const AllUsers = () => {
       .then((result) => {
         if (result.isConfirmed) {
           axiosSecure
-            .patch(`http://localhost:5000/users/change-role/${user._id}`, { role: "admin" })
+            .patch(`users/change-role/${user._id}`, { role: "admin" })
             .then((data) => {
               if (data.data.modifiedCount > 0) {
                 refetch();

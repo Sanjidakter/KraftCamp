@@ -12,7 +12,7 @@ function ClassesPage() {
   const location = useLocation();
 
   useEffect(() => {
-    fetch('http://localhost:5000/classes')
+    fetch(' https://kraftcamp-server.vercel.app/classes')
       .then(response => response.json())
       .then(data => {
         // Filter out the classes with "approved" status

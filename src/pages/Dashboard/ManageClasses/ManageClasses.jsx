@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const ManageClasses = () => {
   const [selectedClass, setSelectedClass] = useState(null);
+  // const [classes, setClasses] = useState([]);
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const [feedbackText, setFeedbackText] = useState("");
   const [axiosSecure] = useAxiosSecure();
@@ -14,14 +15,6 @@ const ManageClasses = () => {
     const res = await axiosSecure.get("/classes");
     return res.data;
   });
-
-
-  useEffect(() => {
-    fetch("http://localhost:5000/classes")
-      .then((response) => response.json())
-      .then((data) => setClasses(data))
-      .catch((error) => console.error("Error fetching classes:", error));
-  }, []);
 
   // console.log(classes);
 
@@ -37,7 +30,7 @@ const ManageClasses = () => {
     .then((result) => {
       if (result.isConfirmed) {
         axiosSecure
-          .patch(`http://localhost:5000/classes/change-status/${classId}`, { status: "approved" })
+          .patch(`classes/change-status/${classId}`, { status: "approved" })
           .then((data) => {
             if (data.data.modifiedCount > 0) {
               refetch();
@@ -63,7 +56,7 @@ const ManageClasses = () => {
     .then((result) => {
       if (result.isConfirmed) {
         axiosSecure
-          .patch(`http://localhost:5000/classes/change-status/${classId}`, { status: "denied" })
+          .patch(`classes/change-status/${classId}`, { status: "denied" })
           .then((data) => {
             if (data.data.modifiedCount > 0) {
               refetch();
@@ -79,7 +72,7 @@ const ManageClasses = () => {
   
   const handleSendFeedback = async (classId, feedback) => {
     try {
-      const response = await fetch(`http://localhost:5000/classes/${classId}/feedback`, {
+      const response = await fetch(` https://kraftcamp-server.vercel.app/classes/${classId}/feedback`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
