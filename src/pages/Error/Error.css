@@ -1,0 +1,64 @@
+.not-found-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  .not-found-heading {
+    font-size: 6rem;
+    margin-bottom: 1rem;
+  }
+  
+  .not-found-message {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .not-found-animation {
+    /* Add your animation styles here */
+    /* For example, you can use a CSS animation library like animate.css */
+    /* Animate.css example: */
+    animation: shake 1s infinite;
+  }
+  
+  .not-found-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+    text-decoration: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .not-found-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Example shake animation */
+  @keyframes shake {
+    0% {
+      transform: translateX(0);
+    }
+    20% {
+      transform: translateX(-20px);
+    }
+    40% {
+      transform: translateX(20px);
+    }
+    60% {
+      transform: translateX(-20px);
+    }
+    80% {
+      transform: translateX(20px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  

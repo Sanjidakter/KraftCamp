@@ -13,6 +13,10 @@ import AddClass from "../pages/Dashboard/AddClass/AddClass";
 import ManageClasses from "../pages/Dashboard/ManageClasses/ManageClasses";
 import MyClasses from "../pages/Dashboard/MyClasses/MyClasses";
 import PrivateRoute from "./PrivateRoute";
+import Payment from "../pages/Dashboard/Payment/Payment";
+import EnrolledClassesPage from "../pages/Dashboard/EnrolledClassesPage/EnrolledClassesPage";
+import Error from "../pages/Error/Error";
+import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 
 
 
@@ -48,10 +52,6 @@ export const router = createBrowserRouter([
     element:<Dashboard></Dashboard>,
    children:[
     {
-      path:'mycart',
-      element: <MyCart></MyCart>
-    },
-    {
       path:'allusers',
       element: <AllUsers></AllUsers>
     },
@@ -67,6 +67,29 @@ export const router = createBrowserRouter([
       path:'myclasses',
       element: <MyClasses></MyClasses>
     },
+    {
+      path:'mycart',
+      element: <MyCart></MyCart>
+    },
+    {
+      path:'payment',
+      element: <Payment></Payment>
+     
+    },
+    {
+      path:'enrolled',
+      element: <EnrolledClassesPage></EnrolledClassesPage>
+     
+    },
+    {
+      path:'history',
+      element: <PaymentHistory></PaymentHistory>
+     
+    },
    ]
+  },
+  {
+    path:'*',
+    element: <Error></Error>
   }
 ]);

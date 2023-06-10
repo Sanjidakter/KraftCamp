@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../../../providers/AuthProvider';
+import { Link } from 'react-router-dom';
 
 
 function MyClasses() {
@@ -49,7 +50,7 @@ function MyClasses() {
           <td>{c.availableSeats}</td>
           <td>{c.feedback}</td>
           <td>
-            <button className="btn btn-primary">Update</button>
+           <Link to="/dashboard/addclass"> <button className="btn btn-primary">Update</button></Link>
           </td>
         </tr>
       ))}
