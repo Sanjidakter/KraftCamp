@@ -7,58 +7,108 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AllUsers = () => {
   const [axiosSecure] = useAxiosSecure();
-  const { data: users = [], refetch } = useQuery(['users'], async () => {
-    const res = await axiosSecure.get('/users')
+  const { data: users = [], refetch } = useQuery(["users"], async () => {
+    const res = await axiosSecure.get("/users");
     return res.data;
-})
+  });
 
-  const handleMakeAdmin = (user) => {
-    fetch(` https://kraftcamp-server.vercel.app/users/admin/${user._id}`, {
-      method: "PATCH",
+  // make instructor
+  const handleMakeInstructor = (user) => {
+    if (users.email === user.email) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "You can't change your own role!",
+      });
+      return;
+    }
+  
+    Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d13",
+      confirmButtonText: "Yes!",
     })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        if (data.modifiedCount) {
-          refetch();
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: `${user.name} is an Admin Now!`,
-            showConfirmButton: false,
-            timer: 1500,
-          });
+      .then((result) => {
+        if (result.isConfirmed) {
+          axiosSecure
+            .patch(`http://localhost:5000/users/change-role/${user._id}`, { role: "instructor" })
+            .then((data) => {
+              if (data.data.modifiedCount > 0) {
+                refetch();
+                Swal.fire("Role has been changed.", "success");
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         }
       });
   };
 
+
+  // make admin
+  const handleMakeAdmin= (user) => {
+    if (users.email === user.email) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "You can't change your own role!",
+      });
+      return;
+    }
+  
+    Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d13",
+      confirmButtonText: "Yes!",
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          axiosSecure
+            .patch(`http://localhost:5000/users/change-role/${user._id}`, { role: "admin" })
+            .then((data) => {
+              if (data.data.modifiedCount > 0) {
+                refetch();
+                Swal.fire("Role has been changed.", "success");
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      });
+  };
+  
+
   const handleDelete = (user) => {
     Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: "You won't be able to revert this!",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-  }).then((result) => {
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
       if (result.isConfirmed) {
-          fetch(` https://kraftcamp-server.vercel.app/users/admin/${user._id}`, {
-              method: 'DELETE'
-          })
-              .then(res => res.json())
-              .then(data => {
-                  if (data.deletedCount > 0) {
-                      refetch();
-                      Swal.fire(
-                          'Deleted!',
-                          'User has been deleted.',
-                          'success'
-                      )
-                  }
-              })
+        fetch(` https://kraftcamp-server.vercel.app/users/admin/${user._id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.deletedCount > 0) {
+              refetch();
+              Swal.fire("Deleted!", "User has been deleted.", "success");
+            }
+          });
       }
-  })
+    });
   };
 
   return (
@@ -78,6 +128,7 @@ const AllUsers = () => {
               <th>Name</th>
               <th>Email</th>
               <th>Role</th>
+              <th> Select Role</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -87,7 +138,8 @@ const AllUsers = () => {
                 <th>{index + 1}</th>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
-                <td>
+                <td>{user?.role ? user?.role : "student"}</td>
+                {/* <td>
                   {user.role === "admin" ? (
                     "admin"
                   ) : (
@@ -98,6 +150,22 @@ const AllUsers = () => {
                       <FaUserShield></FaUserShield>
                     </button>
                   )}
+                </td> */}
+                <td className="md:flex md:gap-2 py-4 ">
+                  <button
+                    onClick={() => handleMakeInstructor(user)}
+                    disabled={user?.role === "instructor"}
+                    className="btn btn-xs text-orange-400"
+                  >
+                    Instructor
+                  </button>
+                  <button
+                    onClick={() => handleMakeAdmin(user)}
+                    disabled={user?.role === "admin"}
+                    className="btn btn-xs text-orange-400"
+                  >
+                    Admin
+                  </button>
                 </td>
                 <td>
                   <button
@@ -117,12 +185,3 @@ const AllUsers = () => {
 };
 
 export default AllUsers;
-
-
-
-
-
-
-
-
-

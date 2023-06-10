@@ -3,21 +3,43 @@ import { NavLink, Outlet } from "react-router-dom";
 import {
   FaShoppingCart,
   FaWallet,
-  FaCalendarAlt,
   FaHome,
   FaUser,
 } from "react-icons/fa";
 import useCart from "../hooks/useCart";
 import { Feather } from "react-feather";
-import useAdmin from "../hooks/UseAdmin";
+import { useContext } from "react";
+import { AuthContext } from "../providers/AuthProvider";
+import useRole from "../hooks/useRole";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const Dashboard = () => {
+  const {loading} = useContext(AuthContext);
   const [cart] = useCart();
+  const [role, isRoleLoading] = useRole();
+  const [dashboardLoaded, setDashboardLoaded] = useState(false);
   // const isAdmin = true;
-  const isAdmin = useAdmin();
-  const isInstructor = false;
+  
+  // // console.log(isAdmin);
+  // if(role === "loading" || isRoleLoading || loading){
+  //   return <div>Loading...</div>;
+  // }
 
-  console.log(isAdmin);
+
+// for fixing reload
+  useEffect(() => {
+    if (role !== "loading" && !isRoleLoading && !loading) {
+      setDashboardLoaded(true);
+    }
+  }, [role, isRoleLoading, loading]);
+
+  useEffect(() => {
+    if (dashboardLoaded) {
+      // Save the dashboard state to local storage
+      localStorage.setItem("dashboardState", JSON.stringify({ role }));
+    }
+  }, [dashboardLoaded, role]);
 
   return (
     <div className="drawer lg:drawer-open">
@@ -34,7 +56,8 @@ const Dashboard = () => {
       <div className="drawer-side">
         <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
         <ul className="menu p-4 w-80 h-full bg-base-200 text-base-content">
-          {isAdmin ? (
+          {
+          role === "admin" ? (
             <>
               <li>
                 <NavLink to="/dashboard/home">
@@ -42,19 +65,34 @@ const Dashboard = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard/history">
+                <NavLink to="/dashboard/manageclasses">
                   <FaWallet></FaWallet> Manage Classes
                 </NavLink>
               </li>
+             
               <li>
                 <NavLink to="/dashboard/allusers">
                   <FaUser></FaUser> Manage Users
                 </NavLink>
               </li>
+
+             
             </>
-          ) : (
+          )  : role === "instructor" ?
             <>
+             {/* for instructor */}
+             <li>
+                <NavLink to="/dashboard/addclass">
+                  <FaUser></FaUser> AddClass
+                </NavLink>
+              </li>
               <li>
+                <NavLink to="/dashboard/myclasses">
+                  <FaUser></FaUser> MyClass
+                </NavLink>
+              </li>
+            </> : <>
+            <li>
                 <NavLink to="/dashboard/home">
                   <FaHome></FaHome> User Home
                 </NavLink>
@@ -79,7 +117,8 @@ const Dashboard = () => {
                 </NavLink>
               </li>
             </>
-          )}
+          
+        }
 
           <div className="divider"></div>
           <li>

@@ -9,6 +9,10 @@ import InstructorsPage from "../pages/InstructorsPage/InstructorsPage";
 import MyCart from "../pages/Dashboard/MyCart/MyCart";
 import Dashboard from "../Layout/Dashboard";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
+import AddClass from "../pages/Dashboard/AddClass/AddClass";
+import ManageClasses from "../pages/Dashboard/ManageClasses/ManageClasses";
+import MyClasses from "../pages/Dashboard/MyClasses/MyClasses";
+import PrivateRoute from "./PrivateRoute";
 
 
 
@@ -50,6 +54,18 @@ export const router = createBrowserRouter([
     {
       path:'allusers',
       element: <AllUsers></AllUsers>
+    },
+    {
+      path:'addclass',
+      element: <AddClass></AddClass>
+    },
+    {
+      path:'manageclasses',
+      element: <ManageClasses></ManageClasses>
+    },
+    {
+      path:'myclasses',
+      element: <MyClasses></MyClasses>
     },
    ]
   }

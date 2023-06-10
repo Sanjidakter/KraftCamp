@@ -12,11 +12,16 @@ function ClassesPage() {
   const location = useLocation();
 
   useEffect(() => {
-    fetch(' https://kraftcamp-server.vercel.app/classes')
+    fetch('http://localhost:5000/classes')
       .then(response => response.json())
-      .then(data => setClasses(data))
+      .then(data => {
+        // Filter out the classes with "approved" status
+        const approvedClasses = data.filter(c => c.status === "approved");
+        setClasses(approvedClasses);
+      })
       .catch(error => console.log(error));
   }, []);
+  
 
   const handleAddToCart = (classItem) => {
     console.log(classItem);

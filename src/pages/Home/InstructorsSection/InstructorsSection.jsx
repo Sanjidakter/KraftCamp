@@ -17,12 +17,12 @@ function InstructorsSection() {
   const popularInstructors = instructors.slice(0, 6);
 
   return (
-    <div className="container mx-auto text-center">
+    <div className="container mx-auto text-center text-orange-500">
     <h1 className="text-3xl font-bold my-8">Popular Instructors</h1>
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {popularInstructors.map((instructor) => (
         <div key={instructor._id} className="p-4 bg-gray-100">
-          <img src={instructor.image} alt={instructor.name} className="w-full sm:w-auto mb-4 max-w-sm mx-auto rounded-full" />
+          <img src={instructor.image} alt={instructor.name} className="sm:w-auto mb-4 max-w-sm mx-auto rounded-full h-40 w-40" />
           <h2 className="text-xl font-bold">{instructor.name}</h2>
           <p className="text-lg">Email: {instructor.email}</p>
           {instructor.classesTaken && (
