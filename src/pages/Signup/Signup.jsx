@@ -28,7 +28,7 @@ const SignUp = () => {
         .then(() => {
           //   console.log("user profile info updated");
           const saveUser = { name: data.name, email: data.email }
-          fetch(" https://kraftcamp-server.vercel.app/users",{
+          fetch(" http://localhost:5000/users",{
             method: 'POST',
             headers:{
                 'content-type': 'application/json'
@@ -63,7 +63,7 @@ const SignUp = () => {
             const loggedInUser = result.user;
             console.log(loggedInUser);
             const saveUser = { name: loggedInUser.displayName, email: loggedInUser.email }
-            fetch(' https://kraftcamp-server.vercel.app/users', {
+            fetch(' http://localhost:5000/users', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'

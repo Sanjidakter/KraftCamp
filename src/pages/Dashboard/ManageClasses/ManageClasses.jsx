@@ -6,10 +6,10 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 
 const ManageClasses = () => {
-  const [selectedClass, setSelectedClass] = useState(null);
-  // const [classes, setClasses] = useState([]);
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const [feedbackText, setFeedbackText] = useState("");
+  const [selectedClassId, setSelectedClassId] = useState(null); // Store the selected class ID
+ 
   const [axiosSecure] = useAxiosSecure();
   const { data: classes = [], refetch } = useQuery(["classes"], async () => {
     const res = await axiosSecure.get("/classes");
@@ -34,6 +34,8 @@ const ManageClasses = () => {
           .then((data) => {
             if (data.data.modifiedCount > 0) {
               refetch();
+              setSelectedClassId(classId); // Set the selected class ID
+              setFeedbackModalOpen(true); // Open the feedback modal
               Swal.fire("status has been changed.", "success");
             }
           })
@@ -60,6 +62,9 @@ const ManageClasses = () => {
           .then((data) => {
             if (data.data.modifiedCount > 0) {
               refetch();
+              setSelectedClassId(classId); // Set the selected class ID
+              setFeedbackModalOpen(true); // Open the feedback modal
+              
               Swal.fire("status has been changed.", "success");
             }
           })
@@ -72,28 +77,33 @@ const ManageClasses = () => {
   
   const handleSendFeedback = async (classId, feedback) => {
     try {
-      const response = await fetch(` https://kraftcamp-server.vercel.app/classes/${classId}/feedback`, {
-        method: 'POST',
+      const response = await fetch(`http://localhost:5000/classes/${classId}/feedback`, {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ feedback }),
       });
-  
+
       if (!response.ok) {
-        throw new Error('Failed to send feedback');
+        throw new Error("Failed to send feedback");
       }
-  
-      // Update the classes array with the updated class
-      const updatedClasses = classes.map((c) =>
-        c._id === classId ? { ...c, feedback } : c
-      );
-      setClasses(updatedClasses);
+
+      // Refetch the classes data to update it
+      refetch();
+
+      Swal.fire("Feedback sent successfully!", "success");
     } catch (error) {
       console.error(error);
+      Swal.fire("Failed to send feedback", "error");
     }
   };
   
+  
+  const handleSubmitFeedback = () => {
+    handleSendFeedback(selectedClassId, feedbackText);
+    setFeedbackModalOpen(false);
+  };
  
 
   return (

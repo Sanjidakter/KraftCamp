@@ -4,7 +4,7 @@ const useClasses = () => {
     const[classes, setClasses] = useState([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
-        fetch(' https://kraftcamp-server.vercel.app/classes')
+        fetch(' http://localhost:5000/classes')
             .then(res => res.json())
             .then(data => {
                 setClasses(data);
