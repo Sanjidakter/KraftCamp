@@ -3,6 +3,7 @@ import { AuthContext } from '../../providers/AuthProvider';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import useCart from '../../hooks/useCart';
+import { Helmet } from 'react-helmet';
 
 function ClassesPage() {
   const [classes, setClasses] = useState([]);
@@ -12,7 +13,7 @@ function ClassesPage() {
   const location = useLocation();
 
   useEffect(() => {
-    fetch(' http://localhost:5000/classes')
+    fetch(' https://kraftcamp-server.vercel.app/classes')
       .then(response => response.json())
       .then(data => {
         // Filter out the classes with "approved" status
@@ -34,7 +35,7 @@ function ClassesPage() {
         email: user.email
       };
 
-      fetch(' http://localhost:5000/carts', {
+      fetch(' https://kraftcamp-server.vercel.app/carts', {
         method: 'POST',
         headers: {
           'content-type': 'application/json'
@@ -72,6 +73,9 @@ function ClassesPage() {
 
   return (
     <div className="container mx-auto">
+        <Helmet>
+      <title>KraftCamp | Classes</title>
+      </Helmet>
       <h1 className="text-3xl font-bold my-8">Classes</h1>
       <div className="grid grid-cols-2 gap-4">
         {classes.map((classItem) => (
@@ -79,7 +83,7 @@ function ClassesPage() {
             key={classItem._id}
             className={`p-4 ${classItem.availableSeats === 0 ? 'bg-red-200' : 'bg-green-200'}`}
           >
-            <img src={classItem.image} alt="Class" className="w-full mb-4" />
+            <img src={classItem.image} alt="Class" className="w-3/4 h-1/2 mb-4" />
             <h2 className="text-xl font-bold">{classItem.title}</h2>
             <p className="text-lg">Instructor: {classItem.instructorName}</p>
             <p className="text-lg">Available Seats: {classItem.availableSeats}</p>

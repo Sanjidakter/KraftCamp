@@ -5,6 +5,7 @@ import sculptureImage from '../../../assets/classes/sculpture.png';
 import jewelryImage from '../../../assets/classes/jwelery.png';
 import craftsImage from '../../../assets/classes/crafts.png';
 import potteryImage from '../../../assets/classes/potery.png';
+import { Link } from 'react-router-dom';
 
 
 const PopularClassesSection = () => {
@@ -73,7 +74,7 @@ const PopularClassesSection = () => {
                 <p className="text-gray-700">
                   {classItem.students} students enrolled
                 </p>
-                <button className="mt-4 btn btn-primary">More</button>
+                <Link to="/classes"><button className="mt-4 btn btn-primary">More</button></Link>
               </div>
             </div>
           ))}

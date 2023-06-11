@@ -12,7 +12,7 @@ const ManageClasses = () => {
  
   const [axiosSecure] = useAxiosSecure();
   const { data: classes = [], refetch } = useQuery(["classes"], async () => {
-    const res = await axiosSecure.get("/classes");
+    const res = await axiosSecure.get("classes");
     return res.data;
   });
 
@@ -77,7 +77,7 @@ const ManageClasses = () => {
   
   const handleSendFeedback = async (classId, feedback) => {
     try {
-      const response = await fetch(`http://localhost:5000/classes/${classId}/feedback`, {
+      const response = await fetch(`https://kraftcamp-server.vercel.app/classes/${classId}/feedback`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
 import SocialLogin from "../../../../bistro-boss-client/src/Shared/SocialLogin/SocialLogin";
+import gif from "../../assets/login.gif";
 
 const Login = () => {
   const [disabled, setDisabled] = useState(true);
@@ -50,7 +51,7 @@ const Login = () => {
             const loggedInUser = result.user;
             console.log(loggedInUser);
             const saveUser = { name: loggedInUser.displayName, email: loggedInUser.email }
-            fetch(' http://localhost:5000/users', {
+            fetch(' https://kraftcamp-server.vercel.app/users', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'
@@ -72,15 +73,16 @@ const Login = () => {
       </Helmet>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col md:flex-row-reverse">
-          <div className="text-center md:w-1/2 lg:text-left">
+          <div className="text-center md:w-1/4 lg:text-left">
             <h1 className="text-5xl font-bold">Login now!</h1>
             <p className="py-6">
+            <img src={gif} alt="GIF" />
               Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
               excepturi exercitationem quasi. In deleniti eaque aut repudiandae
               et a id nisi.
             </p>
           </div>
-          <div className="card md:w-1/2 max-w-sm shadow-2xl bg-base-100">
+          <div className="card md:w-3/4 max-w-sm shadow-2xl bg-base-100">
             <form onSubmit={handleLogin} className="card-body">
               <div className="form-control">
                 <label className="label">

@@ -37,7 +37,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const logOut = () => {
-    setLoading(true);
+
     return signOut(auth);
   };
 
@@ -56,7 +56,7 @@ const AuthProvider = ({ children }) => {
       // get and set token
       if (currentUser) {
         axios
-          .post(" http://localhost:5000/jwt", { email: currentUser.email })
+          .post(" https://kraftcamp-server.vercel.app/jwt", { email: currentUser.email })
           .then((data) => {
             // console.log(data.data.token)
             localStorage.setItem("access-token", data.data.token);
@@ -98,7 +98,7 @@ export default AuthProvider;
 
   //         // get and set token
   //         if(currentUser){
-  //             axios.post(' http://localhost:5000/jwt', {email: currentUser.email})
+  //             axios.post(' https://kraftcamp-server.vercel.app/jwt', {email: currentUser.email})
   //             .then(data =>{
   //                 // console.log(data.data.token)
   //                 localStorage.setItem('access-token', data.data.token)

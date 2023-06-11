@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-
+import signgif from "../../assets/signin.gif";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../providers/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ const SignUp = () => {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm();
   const { createUser, updateUserProfile, googleSignIn } =
@@ -20,6 +21,13 @@ const SignUp = () => {
   const [error, setError] = useState("");
 
   const onSubmit = (data) => {
+    const { password, passwordConfirm, ...userData } = data;
+
+    if (password !== passwordConfirm) {
+      setError("Passwords do not match");
+      return;
+    }
+
     // console.log(data);
     createUser(data.email, data.password).then((result) => {
       const loggedUser = result.user;
@@ -27,13 +35,13 @@ const SignUp = () => {
       updateUserProfile(data.name, data.photoURL)
         .then(() => {
           //   console.log("user profile info updated");
-          const saveUser = { name: data.name, email: data.email }
-          fetch(" http://localhost:5000/users",{
-            method: 'POST',
-            headers:{
-                'content-type': 'application/json'
+          const saveUser = { name: data.name, email: data.email };
+          fetch(" https://kraftcamp-server.vercel.app/users", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
             },
-            body: JSON.stringify(saveUser)
+            body: JSON.stringify(saveUser),
           })
             .then((res) => res.json())
             .then((data) => {
@@ -58,24 +66,26 @@ const SignUp = () => {
   const from = location.state?.from?.pathname || "/";
 
   const handleGoogleSignIn = () => {
-    googleSignIn()
-        .then(result => {
-            const loggedInUser = result.user;
-            console.log(loggedInUser);
-            const saveUser = { name: loggedInUser.displayName, email: loggedInUser.email }
-            fetch(' http://localhost:5000/users', {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify(saveUser)
-            })
-                .then(res => res.json())
-                .then(() => {
-                    navigate(from, { replace: true });
-                })
-        })
-}
+    googleSignIn().then((result) => {
+      const loggedInUser = result.user;
+      console.log(loggedInUser);
+      const saveUser = {
+        name: loggedInUser.displayName,
+        email: loggedInUser.email,
+      };
+      fetch(" https://kraftcamp-server.vercel.app/users", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(saveUser),
+      })
+        .then((res) => res.json())
+        .then(() => {
+          navigate(from, { replace: true });
+        });
+    });
+  };
 
   return (
     <>
@@ -84,15 +94,13 @@ const SignUp = () => {
       </Helmet>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse">
-          <div className="text-center lg:text-left">
+          <div className="text-center md:w-2/4 lg:text-left">
             <h1 className="text-5xl font-bold">Sign up now!</h1>
             <p className="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
+              <img className="rounded-lg " src={signgif} alt="GIF" />
             </p>
           </div>
-          <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+          <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 ">
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
               <div className="form-control">
                 <label className="label">
@@ -174,6 +182,23 @@ const SignUp = () => {
                     Forgot password?
                   </a>
                 </label>
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Confirm Password</span>
+                </label>
+                <input
+                  type="password"
+                  {...register("passwordConfirm", {
+                    required: true,
+                    validate: (value) => value === watch("password"),
+                  })}
+                  placeholder="confirm password"
+                  className="input input-bordered"
+                />
+                {errors.passwordConfirm && (
+                  <span className="text-red-600">Passwords do not match</span>
+                )}
               </div>
               <div className="form-control mt-6">
                 <input

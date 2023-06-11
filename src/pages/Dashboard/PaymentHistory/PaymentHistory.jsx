@@ -2,13 +2,10 @@ import React, { useEffect, useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 
-
 const PaymentHistory = () => {
   const [payments, setPayments] = useState([]);
   const [axiosSecure] = useAxiosSecure();
-  const {user} = useAuth();
-
-console.log(user)
+  const { user } = useAuth();
 
   const fetchPayments = () => {
     axiosSecure
@@ -34,6 +31,10 @@ console.log(user)
     ));
   };
 
+  if (!user || !user.email) {
+    return <div>Loading user data...</div>;
+  }
+
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-2 text-center">Payment History</h2>
@@ -43,7 +44,6 @@ console.log(user)
             <th className="border-b border-gray-200 px-4 py-2">Date</th>
             <th className="border-b border-gray-200 px-4 py-2">Total Cost</th>
             <th className="border-b border-gray-200 px-4 py-2">Classes</th>
-            {/* Add more table headers for additional payment details */}
           </tr>
         </thead>
         <tbody>
@@ -51,12 +51,11 @@ console.log(user)
             if (payment.email === user.email) {
               return (
                 <tr key={payment._id}>
-                  <td className="border-b border-gray-200 px-4 py-2">{payment.date}</td>
+                  <td className="border-b border-gray-200 px-4 py-2">{new Date(payment.date).toLocaleString('en-US', { dateStyle: 'short', timeStyle: 'short' })}</td>
                   <td className="border-b border-gray-200 px-4 py-2">{payment.price}</td>
                   <td className="border-b border-gray-200 px-4 py-2">
                     <ul>{getItemNames(payment)}</ul>
                   </td>
-                  {/* Add more table cells for additional payment details */}
                 </tr>
               );
             }

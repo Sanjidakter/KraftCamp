@@ -9,13 +9,13 @@ const EnrolledClassesPage = () => {
 
   const fetchPayments = () => {
    
-    axiosSecure.get('/payments')
+    axiosSecure.get('payments')
     .then((res) => {
       setPayments(res.data);
     })
     .catch((error) => {
       console.error(error);
-      // Handle error
+     
     });
 };
 

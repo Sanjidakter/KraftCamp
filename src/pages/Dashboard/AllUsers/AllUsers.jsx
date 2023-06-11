@@ -8,7 +8,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const AllUsers = () => {
   const [axiosSecure] = useAxiosSecure();
   const { data: users = [], refetch } = useQuery(["users"], async () => {
-    const res = await axiosSecure.get("/users");
+    const res = await axiosSecure.get("users");
     return res.data;
   });
 
@@ -34,7 +34,7 @@ const AllUsers = () => {
       .then((result) => {
         if (result.isConfirmed) {
           axiosSecure
-            .patch(` users/change-role/${user._id}`, { role: "instructor" })
+            .patch(`users/change-role/${user._id}`, { role: "instructor" })
             .then((data) => {
               if (data.data.modifiedCount > 0) {
                 refetch();
@@ -97,7 +97,7 @@ const AllUsers = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(` http://localhost:5000/users/admin/${user._id}`, {
+        fetch(` https://kraftcamp-server.vercel.app/users/admin/${user._id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -114,7 +114,7 @@ const AllUsers = () => {
   return (
     <div className="w-full text-orange-400">
       <Helmet>
-        <title>Bistro Boss | All users</title>
+        <title>KraftCamp | All users</title>
       </Helmet>
       <h3 className="text-3xl font-semibold my-4">
         Total Users: {users.length}

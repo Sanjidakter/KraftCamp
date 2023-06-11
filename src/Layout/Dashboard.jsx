@@ -19,7 +19,8 @@ const Dashboard = () => {
   const [cart] = useCart();
   const [role, isRoleLoading] = useRole();
   const [dashboardLoaded, setDashboardLoaded] = useState(false);
-  // const isAdmin = true;
+  
+  console.log(role)
   
   // // console.log(isAdmin);
   // if(role === "loading" || isRoleLoading || loading){
@@ -40,6 +41,10 @@ const Dashboard = () => {
       localStorage.setItem("dashboardState", JSON.stringify({ role }));
     }
   }, [dashboardLoaded, role]);
+
+
+
+  
 
   return (
     <div className="drawer lg:drawer-open">
