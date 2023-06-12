@@ -40,7 +40,7 @@ const AddClass = () => {
     console.log(newItem);
     // Replace axiosSecure.post with your preferred method for making HTTP requests
     // For example, you can use fetch or another HTTP client library
-    fetch(" https://kraftcamp-server.vercel.app/classes", {
+    fetch(" http://localhost:5000/classes", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

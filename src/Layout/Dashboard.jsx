@@ -19,10 +19,9 @@ const Dashboard = () => {
   const [cart] = useCart();
   const [role, isRoleLoading] = useRole();
   const [dashboardLoaded, setDashboardLoaded] = useState(false);
+  // const isAdmin = true;
   
-  console.log(role)
-  
-  // // console.log(isAdmin);
+  console.log(role);
   // if(role === "loading" || isRoleLoading || loading){
   //   return <div>Loading...</div>;
   // }
@@ -41,10 +40,6 @@ const Dashboard = () => {
       localStorage.setItem("dashboardState", JSON.stringify({ role }));
     }
   }, [dashboardLoaded, role]);
-
-
-
-  
 
   return (
     <div className="drawer lg:drawer-open">
@@ -97,7 +92,11 @@ const Dashboard = () => {
                 </NavLink>
               </li>
             </> : <>
-          
+              <li>
+                <NavLink to="/dashboard/history">
+                  <FaWallet></FaWallet> Payment History
+                </NavLink>
+              </li>
               <li>
                 <NavLink to="/dashboard/mycart">
                   <FaShoppingCart></FaShoppingCart> My Classes
@@ -110,11 +109,6 @@ const Dashboard = () => {
                 <NavLink to="/dashboard/enrolled">
                   <Feather></Feather>
                   Enrolled Classes
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/history">
-                  <FaWallet></FaWallet> Payment History
                 </NavLink>
               </li>
             </>

@@ -51,7 +51,7 @@ const Login = () => {
             const loggedInUser = result.user;
             console.log(loggedInUser);
             const saveUser = { name: loggedInUser.displayName, email: loggedInUser.email }
-            fetch(' https://kraftcamp-server.vercel.app/users', {
+            fetch(' http://localhost:5000/users', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'
@@ -76,7 +76,7 @@ const Login = () => {
           <div className="text-center md:w-1/4 lg:text-left">
             <h1 className="text-5xl font-bold">Login now!</h1>
             <p className="py-6">
-            <img src={gif} alt="GIF" />
+            <img className="mb-3" src={gif} alt="GIF" />
               Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
               excepturi exercitationem quasi. In deleniti eaque aut repudiandae
               et a id nisi.

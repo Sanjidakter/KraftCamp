@@ -1,15 +1,16 @@
+
+
 import React from "react";
 import { Helmet } from "react-helmet";
 import useCart from "../../../hooks/useCart";
-import { FaTrashAlt } from "react-icons/fa";
+import { FaTrashAlt, FaCreditCard } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+// import CheckoutForm from "../payment/CheckoutForm";
 
 const MyCart = () => {
   const [cart, refetch] = useCart();
-  // console.log(cart);
-
-  const total = cart.reduce((sum, item) => item.price + sum, 0);
+  
 
   const handleDelete = (item) => {
     Swal.fire({
@@ -22,7 +23,7 @@ const MyCart = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(` https://kraftcamp-server.vercel.app/carts/${item._id}`, {
+        fetch(`http://localhost:5000/carts/${item._id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -41,13 +42,9 @@ const MyCart = () => {
       <Helmet>
         <title>KraftCamp | My Cart</title>
       </Helmet>
-      <div className="uppercase font-semibold h-[60px] flex justify-evenly items-center">
-        <h3 className="text-3xl">Selected Classes : {cart.length}</h3>
-        <h3 className="text-3xl">Total Payment: ${total}</h3>
-        <Link to="/dashboard/payment">
-          {" "}
-          <button className="btn btn-warning btn-sm">PAY</button>
-        </Link>
+      <div className="uppercase font-semibold h-[60px] flex justify-between items-center">
+        <h3 className="text-3xl">Selected Classes: {cart.length}</h3>
+        
       </div>
       <div className="overflow-x-auto w-full">
         <table className="table w-full">
@@ -78,12 +75,23 @@ const MyCart = () => {
                 <td>{item.name}</td>
                 <td className="text">${item.price}</td>
                 <td>
-                  <button
-                    onClick={() => handleDelete(item)}
-                    className="btn btn-ghost bg-red-600  text-white"
-                  >
-                    <FaTrashAlt></FaTrashAlt>
-                  </button>
+                  <div className="flex">
+                    <button
+                      onClick={() => handleDelete(item)}
+                      className="btn btn-ghost bg-red-600  text-white mr-2"
+                    >
+                      <FaTrashAlt></FaTrashAlt>
+                    </button>
+                    <Link
+                      to={`/dashboard/payment/${item._id}`}
+                      state={{ item }}
+                      refetch={refetch}
+                    >
+                      <button className="btn btn-ghost bg-blue-600 text-white">
+                        <FaCreditCard></FaCreditCard>
+                      </button>
+                    </Link>
+                  </div>
                 </td>
               </tr>
             ))}

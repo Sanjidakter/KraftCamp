@@ -36,7 +36,7 @@ const SignUp = () => {
         .then(() => {
           //   console.log("user profile info updated");
           const saveUser = { name: data.name, email: data.email };
-          fetch(" https://kraftcamp-server.vercel.app/users", {
+          fetch(" http://localhost:5000/users", {
             method: "POST",
             headers: {
               "content-type": "application/json",
@@ -59,7 +59,10 @@ const SignUp = () => {
 
           navigate("/");
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.log(error);
+          setError(error.message);
+        });
     });
   };
 
@@ -73,7 +76,7 @@ const SignUp = () => {
         name: loggedInUser.displayName,
         email: loggedInUser.email,
       };
-      fetch(" https://kraftcamp-server.vercel.app/users", {
+      fetch(" http://localhost:5000/users", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -227,6 +230,7 @@ const SignUp = () => {
               </button>
             </div>
             {/* <SocialLogin></SocialLogin> */}
+           
             <p className="text-warning p-4 text-center">{error}</p>
           </div>
         </div>

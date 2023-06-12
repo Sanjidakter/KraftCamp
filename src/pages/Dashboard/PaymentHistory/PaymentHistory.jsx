@@ -6,6 +6,7 @@ const PaymentHistory = () => {
   const [payments, setPayments] = useState([]);
   const [axiosSecure] = useAxiosSecure();
   const { user } = useAuth();
+  const [isLoading, setIsLoading] = useState(true); // Added loading state
 
   const fetchPayments = () => {
     axiosSecure
@@ -18,6 +19,9 @@ const PaymentHistory = () => {
       .catch((error) => {
         console.error(error);
         // Handle error
+      })
+      .finally(() => {
+        setIsLoading(false); // Set loading state to false when the request is completed
       });
   };
 
@@ -33,6 +37,10 @@ const PaymentHistory = () => {
 
   if (!user || !user.email) {
     return <div>Loading user data...</div>;
+  }
+
+  if (isLoading) {
+    return <progress className="progress w-56"></progress>
   }
 
   return (
@@ -54,7 +62,7 @@ const PaymentHistory = () => {
                   <td className="border-b border-gray-200 px-4 py-2">{new Date(payment.date).toLocaleString('en-US', { dateStyle: 'short', timeStyle: 'short' })}</td>
                   <td className="border-b border-gray-200 px-4 py-2">{payment.price}</td>
                   <td className="border-b border-gray-200 px-4 py-2">
-                    <ul>{getItemNames(payment)}</ul>
+                    <ul>{payment.itemNames}</ul>
                   </td>
                 </tr>
               );

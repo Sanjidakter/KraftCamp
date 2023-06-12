@@ -5,7 +5,7 @@ function InstructorsSection() {
   const [instructors, setInstructors] = useState([]);
 
   useEffect(() => {
-    axios.get(' https://kraftcamp-server.vercel.app/instructors')
+    axios.get(' http://localhost:5000/instructors')
       .then(response => {
         setInstructors(response.data);
       })

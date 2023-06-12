@@ -1,12 +1,14 @@
+
+
+
+
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect } from "react";
 import { useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 
-// import './CheckoutForm.css'
-
-const CheckoutForm = ({ cart, price }) => {
+const CheckoutForm = ({ item, refetch }) => {
   const stripe = useStripe();
   const elements = useElements();
   const { user } = useAuth();
@@ -17,13 +19,22 @@ const CheckoutForm = ({ cart, price }) => {
   const [transactionId, setTransactionId] = useState("");
 
   useEffect(() => {
-    if (price > 0) {
-      axiosSecure.post("/create-payment-intent", { price }).then((res) => {
-        console.log(res.data.clientSecret);
+    const fetchClientSecret = async () => {
+      try {
+        const res = await axiosSecure.post("/create-payment-intent", {
+          price: item.price,
+        });
         setClientSecret(res.data.clientSecret);
-      });
+      } catch (error) {
+        console.log(error);
+        // Handle error
+      }
+    };
+
+    if (item.price > 0) {
+      fetchClientSecret();
     }
-  }, [price, axiosSecure]);
+  }, [item.price, axiosSecure]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -47,13 +58,13 @@ const CheckoutForm = ({ cart, price }) => {
       setCardError(error.message);
     } else {
       setCardError("");
-      // console.log('payment method', paymentMethod)
     }
 
     setProcessing(true);
 
-    const { paymentIntent, error: confirmError } =
-      await stripe.confirmCardPayment(clientSecret, {
+    const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(
+      clientSecret,
+      {
         payment_method: {
           card: card,
           billing_details: {
@@ -61,55 +72,58 @@ const CheckoutForm = ({ cart, price }) => {
             name: user?.displayName || "anonymous",
           },
         },
-      });
+      }
+    );
 
     if (confirmError) {
       console.log(confirmError);
+      // Handle error
     }
 
-    console.log("payment intent", paymentIntent);
     setProcessing(false);
+
     if (paymentIntent.status === "succeeded") {
       setTransactionId(paymentIntent.id);
-      // save payment information to the server
+
+      // Save payment information to the server
       const payment = {
         email: user?.email,
         transactionId: paymentIntent.id,
-        price,
+        price: item.price,
         date: new Date(),
-        quantity: cart.length,
-        cartItems: cart.map((item) => item._id),
+        cartId: item._id,
+        classId: item.menuItemId,
         status: "service pending",
-        itemNames: cart.map((item) => item.name),
+        itemNames: item.name,
       };
-      axiosSecure.post("/payments", payment).then((res) => {
+      try {
+        const res = await axiosSecure.post("/payments", payment);
         console.log(res.data);
         if (res.data.result.insertedId) {
-          // display confirm
+          // Display confirmation
           // Update available seats in classes collection
-          updateAvailableSeats(itemNames);
+          updateAvailableSeats(item.menuItemId);
+          // Delete the item from the cart
+          refetch();
         }
-      });
+      } catch (error) {
+        console.log(error);
+        // Handle error
+      }
     }
   };
 
   // Function to update available seats in classes collection
-  const updateAvailableSeats = (itemNames) => {
-    itemNames.forEach((className) => {
-      axiosSecure
-        .patch("/classes/update-seats", { className })
-        .then((res) => {
-          console.log(`Updated available seats for class ${className}`);
-        })
-        .catch((error) => {
-          console.error(
-            `Error updating available seats for class ${className}`,
-            error
-          );
-        });
-    });
+  const updateAvailableSeats = async (classId) => {
+    try {
+      await axios.patch(`/classes/update-seats/${classId}`);
+      console.log(`Updated available seats for class with ID ${classId}`);
+    } catch (error) {
+      console.error('Error updating available seats', error);
+      // Handle error
+    }
   };
-
+  
   return (
     <>
       <form className="w-2/3 m-8" onSubmit={handleSubmit}>

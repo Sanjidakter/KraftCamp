@@ -36,6 +36,7 @@ fetchPayments();
           <th className="border-b border-gray-200 px-4 py-2">Email</th>
           <th className="border-b border-gray-200 px-4 py-2">Transaction ID</th>
           <th className="border-b border-gray-200 px-4 py-2">Enrolled Classes</th>
+          
           {/* Add more table headers for additional payment details */}
         </tr>
       </thead>
@@ -47,8 +48,9 @@ fetchPayments();
                 <td className="border-b border-gray-200 px-4 py-2">{payment.email}</td>
                 <td className="border-b border-gray-200 px-4 py-2">{payment.transactionId}</td>
                 <td className="border-b border-gray-200 px-4 py-2">
-                  <ul>{getItemNames(payment)}</ul>
+                  <ul>{payment.itemNames}</ul>
                 </td>
+                
                 {/* Add more table cells for additional payment details */}
               </tr>
             );
