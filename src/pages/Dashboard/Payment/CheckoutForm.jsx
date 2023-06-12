@@ -1,14 +1,11 @@
 
-
-
-
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect } from "react";
 import { useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 
-const CheckoutForm = ({ item, refetch }) => {
+const CheckoutForm = ({ item }) => {
   const stripe = useStripe();
   const elements = useElements();
   const { user } = useAuth();
@@ -83,6 +80,9 @@ const CheckoutForm = ({ item, refetch }) => {
     setProcessing(false);
 
     if (paymentIntent.status === "succeeded") {
+      // Update available seats in classes collection
+      updateAvailableSeats(item.menuItemId);
+      
       setTransactionId(paymentIntent.id);
 
       // Save payment information to the server
@@ -96,15 +96,14 @@ const CheckoutForm = ({ item, refetch }) => {
         status: "service pending",
         itemNames: item.name,
       };
+        
       try {
         const res = await axiosSecure.post("/payments", payment);
         console.log(res.data);
-        if (res.data.result.insertedId) {
+        if (res.data.insertedId) {
           // Display confirmation
-          // Update available seats in classes collection
-          updateAvailableSeats(item.menuItemId);
-          // Delete the item from the cart
-          refetch();
+        
+         
         }
       } catch (error) {
         console.log(error);
@@ -112,17 +111,24 @@ const CheckoutForm = ({ item, refetch }) => {
       }
     }
   };
-
+ 
   // Function to update available seats in classes collection
-  const updateAvailableSeats = async (classId) => {
-    try {
-      await axios.patch(`/classes/update-seats/${classId}`);
+const updateAvailableSeats = async (classId) => {
+  // console.log('available seats',classId);
+  try {
+    const response = await axiosSecure.patch(`/classes/update-seats/${classId}`);
+
+    if (response.status === 200) {
       console.log(`Updated available seats for class with ID ${classId}`);
-    } catch (error) {
-      console.error('Error updating available seats', error);
-      // Handle error
+    } else {
+      console.log(`Failed to update available seats for class with ID ${classId}`);
     }
-  };
+  } catch (error) {
+    console.error('Error updating available seats:', error);
+    // Handle error
+  }
+};
+
   
   return (
     <>

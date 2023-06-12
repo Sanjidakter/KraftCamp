@@ -19,27 +19,32 @@ const Dashboard = () => {
   const [cart] = useCart();
   const [role, isRoleLoading] = useRole();
   const [dashboardLoaded, setDashboardLoaded] = useState(false);
-  // const isAdmin = true;
+
   
-  console.log(role);
+  // console.log(role);
   // if(role === "loading" || isRoleLoading || loading){
   //   return <div>Loading...</div>;
   // }
 
 
 // for fixing reload
-  useEffect(() => {
-    if (role !== "loading" && !isRoleLoading && !loading) {
-      setDashboardLoaded(true);
-    }
-  }, [role, isRoleLoading, loading]);
+  // useEffect(() => {
+    
+  //   if (role !== "loading" && !isRoleLoading && !loading) {
+  //     setDashboardLoaded(true);
+  //   }
+  // }, [role, isRoleLoading, loading]);
 
-  useEffect(() => {
-    if (dashboardLoaded) {
-      // Save the dashboard state to local storage
-      localStorage.setItem("dashboardState", JSON.stringify({ role }));
-    }
-  }, [dashboardLoaded, role]);
+  // useEffect(() => {
+  //   if (dashboardLoaded) {
+  //     // Save the dashboard state to local storage
+  //     localStorage.setItem("dashboardState", JSON.stringify({ role }));
+  //   }
+  // }, [dashboardLoaded, role]);
+
+ if(role === "loading" || isRoleLoading || loading){
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="drawer lg:drawer-open">
@@ -59,11 +64,6 @@ const Dashboard = () => {
           {
           role === "admin" ? (
             <>
-              <li>
-                <NavLink to="/dashboard/home">
-                  <FaHome></FaHome> Admin Home
-                </NavLink>
-              </li>
               <li>
                 <NavLink to="/dashboard/manageclasses">
                   <FaWallet></FaWallet> Manage Classes

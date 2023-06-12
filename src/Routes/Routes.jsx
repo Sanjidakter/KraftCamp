@@ -17,6 +17,7 @@ import Payment from "../pages/Dashboard/Payment/Payment";
 import EnrolledClassesPage from "../pages/Dashboard/EnrolledClassesPage/EnrolledClassesPage";
 import Error from "../pages/Error/Error";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
+import UpdateClasses from "../pages/Dashboard/UpdateClasses/UpdateClasses";
 
 
 
@@ -66,6 +67,10 @@ export const router = createBrowserRouter([
     {
       path:'myclasses',
       element: <MyClasses></MyClasses>
+    },
+    {
+      path:'updateclasses/:id',
+      element: <UpdateClasses></UpdateClasses>
     },
     {
       path:'mycart',

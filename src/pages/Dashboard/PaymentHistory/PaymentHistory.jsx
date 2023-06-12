@@ -10,7 +10,7 @@ const PaymentHistory = () => {
 
   const fetchPayments = () => {
     axiosSecure
-      .get('/payments')
+      .get('payments')
       .then((res) => {
         // Sort payments in descending order based on the date
         const sortedPayments = res.data.sort((a, b) => new Date(b.date) - new Date(a.date));

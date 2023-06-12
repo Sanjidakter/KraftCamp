@@ -34,13 +34,14 @@ const AddClass = () => {
       mail: user.email,
       price: parseFloat(price),
       availableSeats,
+      enrollment: 0,
       image,
       status: 'pending',
     };
     console.log(newItem);
     // Replace axiosSecure.post with your preferred method for making HTTP requests
     // For example, you can use fetch or another HTTP client library
-    fetch(" http://localhost:5000/classes", {
+    fetch(" https://kraftcamp-server.vercel.app/classes", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +56,7 @@ const AddClass = () => {
           Swal.fire({
             position: "top-end",
             icon: "success",
-            title: "Item added successfully",
+            title: "Class added successfully",
             showConfirmButton: false,
             timer: 1500,
           });

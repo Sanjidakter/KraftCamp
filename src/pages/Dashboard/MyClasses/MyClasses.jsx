@@ -13,7 +13,7 @@ function MyClasses() {
       if (user) {
         const loggedInUser = user.displayName;
   
-        fetch(' http://localhost:5000/classes')
+        fetch('https://kraftcamp-server.vercel.app/classes')
           .then((response) => response.json())
           .then((data) => {
             const instructorClasses = data.filter(
@@ -47,7 +47,7 @@ function MyClasses() {
           <th>{index + 1}</th>
           <td>{c.title}</td>
           <td>{c.status}</td>
-          <td>{c.availableSeats}</td>
+          <td>{c.enrollment}</td>
           <td>{c.feedback}</td>
           <td>
            <Link to="/dashboard/addclass"> <button className="btn btn-primary">Update</button></Link>
