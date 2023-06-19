@@ -6,6 +6,8 @@ import Info from "../Info/Info";
 import PopularClassesSection from "../PopularClassesSection/PopularClassesSection";
 import MyComponent from "../MyComponent/MyComponent";
 import InstructorsSection from "../InstructorsSection/InstructorsSection";
+import ReviewSection from "../ReviewSection/ReviewSection";
+import News from "../News/News";
 
 const Home = () => {
   const animationProps = useSpring({
@@ -71,6 +73,8 @@ const Home = () => {
       <PopularClassesSection />
       <MyComponent />
       <InstructorsSection />
+      <ReviewSection></ReviewSection>
+      <News></News>
     </div>
   );
 };
